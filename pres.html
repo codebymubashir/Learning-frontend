@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Quantum Computer Architecture</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&family=Inter:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+:root{--accent:#22d3ee;--card:#151b33;--line:#263056;--mut:#94a3b8}
+.reveal{font-family:'Inter',sans-serif;font-size:27px}
+.reveal h1,.reveal h2,.reveal h3{font-family:'Poppins',sans-serif;text-transform:none;color:#fff}
+.reveal h2{color:var(--accent);font-size:1.5em;margin-bottom:.5em}
+.reveal ul{display:block;text-align:left}
+.reveal li{margin:.35em 0}
+.accent{color:var(--accent)}
+.sub{color:var(--mut);font-size:.75em}
+.row{display:flex;gap:18px;align-items:stretch;text-align:left}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 18px;flex:1;font-size:.8em}
+.card h3{font-size:1em;margin:0 0 6px;color:var(--accent)}
+.idea{background:#0e2a33;border-left:5px solid var(--accent);border-radius:8px;padding:10px 16px;font-size:.78em;text-align:left;margin-top:16px}
+.reveal table{font-size:.72em;margin:0 auto}
+.reveal th{color:var(--accent)}
+.reveal td,.reveal th{padding:6px 14px;border-bottom:1px solid var(--line)}
+.stack{display:flex;flex-direction:column;gap:8px;width:82%;margin:0 auto}
+.layer{background:var(--card);border-left:6px solid var(--accent);border-radius:8px;padding:9px 16px;font-size:.78em;text-align:left}
+.mono{font-family:monospace;color:#fde68a}
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+
+<section data-background-color="#0b1020">
+<h1>Quantum Computer <span class="accent">Architecture</span></h1>
+<p>Qubits, Gates, and Quantum Control</p>
+<p class="sub">Computer Architecture &bull; Presented by Mubashir &bull; IUB</p>
+<aside class="notes">Roman Urdu: Aaj hum dekhenge ke quantum computer andar se kaise bana hota hai.</aside>
+</section>
+
+<section data-background-color="#0b1020">
+<h2>What We Will Learn</h2>
+<ul>
+<li>1. Quick recap: how a normal computer works</li>
+<li>2. Why we need quantum computers</li>
+<li>3. Qubits: superposition and entanglement</li>
+<li>4. Quantum gates and a simple circuit</li>
+<li>5. Quantum control: how we actually operate qubits</li>
+<li>6. The full architecture stack and its challenges</li>
+</ul>
+</section>
+
+<section data-background-color="#0b1020">
+<h2>Recap: Classical Computer</h2>
+<ul>
+<li><b>Bit:</b> the smallest unit of data. It is always <b>0 or 1</b>.</li>
+<li><b>Transistor:</b> a tiny electric switch. ON = 1, OFF = 0.</li>
+<li><b>Logic gates</b> (AND, OR, NOT) combine bits to do calculations.</li>
+<li><b>CPU</b> = billions of transistors running gates very fast.</li>
+</ul>
+<div class="idea"><b>Analogy:</b> a classical bit is like a light switch. It is either ON or OFF, nothing in between.</div>
+<aside class="notes">Roman Urdu: Normal computer bits use karta hai jo ya 0 hoti hai ya 1, bilkul light switch ki tarah.</aside>
+</section>
+
+<section data-background-color="#0b1020">
+<h2>Why Quantum Computers?</h2>
+<div class="row">
+<div class="card"><h3>Factoring</h3>Breaking big numbers into primes. Classical computers take extremely long. Shor's algorithm can do it much faster. (This is why RSA encryption is at risk.)</div>
+<div class="card"><h3>Simulating nature</h3>Molecules and materials follow quantum rules. Quantum computers can simulate them for new medicines and batteries.</div>
+<div class="card"><h3>Searching</h3>Grover's algorithm searches unsorted data in about &radic;N steps instead of N.</div>
+</div>
+<div class="idea">Quantum computers are not "faster at everything". They are better at <b>specific problems</b>.</div>
+</section>
+
+<section data-background-color="#0b1020">
+<h2>What is a Qubit?</h2>
+<ul>
+<li>A <b>qubit</b> (quantum bit) is the basic unit of quantum information.</li>
+<li>Its two basic states are written <span class="mono">|0&#9002;</span> and <span class="mono">|1&#9002;</span>.</li>
+<li>Unlike a bit, it can be in a <b>mix of both</b> at the same time.</li>
+</ul>
+<div class="idea"><b>Analogy:</b> a coin lying on a table is heads or tails (classical bit). A coin <b>spinning in the air</b> is a mix of both until it lands (qubit).</div>
+<aside class="notes">Roman Urdu: Qubit ek ghoomte hue sikke ki tarah hai. Jab tak girta nahi, woh head aur tail dono ka mix hota hai.</aside>
+</section>
+
+<section data-background-color="#0b1020">
+<h2>Superposition</h2>
+<p class="mono" style="font-size:1.1em">|&psi;&#9002; = &alpha;|0&#9002; + &beta;|1&#9002;</p>
+<ul>
+<li class="fragment">&alpha; and &beta; tell us <b>how much</b> of each state is in the qubit.</li>
+<li class="fragment">Chance of getting 0 = |&alpha;|&sup2;, chance of getting 1 = |&beta;|&sup2;. They add up to 100%.</li>
+<li class="fragment"><b>Measurement:</b> when we look at the qubit, the spinning coin lands. We get only a normal 0 or 1 and the superposition is gone.</li>
+</ul>
+<div class="idea">With n qubits, a quantum computer works with 2<sup>n</sup> states together. 10 qubits = 1024 states, 50 qubits = over a quadrillion.</div>
+</section>
+
+<section data-background-color="#0b1020">
+<h2>Entanglement</h2>
+<ul>
+<li>Two qubits can be linked so they act as <b>one system</b>.</li>
+<li>Measure one and you instantly know the result of the other, even if they are far apart.</li>
+<li>Example: the Bell state <span class="mono">(|00&#9002; + |11&#9002;)/&radic;2</span> gives either 00 or 11, never 01 or 10.</li>
+</ul>
+<div class="idea"><b>Analogy:</b> a pair of gloves in two sealed boxes. Open one box and find the left glove, and you instantly know the other is the right glove.</div>
+<aside class="notes">Roman Urdu: Entanglement mein do qubits aapas mein jud jate hain. Ek ko dekho to doosre ka result pata chal jata hai.</aside>
+</section>
+
+<section data-background-color="#0b1020">
+<h2>How Are Qubits Built?</h2>
+<table>
+<tr><th>Type</th><th>How it works</th><th>Pros</th><th>Cons</th></tr>
+<tr><td><b>Superconducting</b></td><td>Tiny electric circuits at near absolute zero</td><td>Very fast gates, chip-based</td><td>Needs extreme cooling, short life</td></tr>
+<tr><td><b>Trapped ion</b></td><td>Single atoms held by electric fields, controlled by lasers</td><td>Very accurate, long life</td><td>Slower gates</td></tr>
+<tr><td><b>Photonic</b></td><td>Particles of light carry the information</td><td>Works at room temperature</td><td>Photons get lost, hard to make them interact</td></tr>
+</table>
+</section>
+
+<section data-background-color="#0b1020">
+<h2>Decoherence: The Biggest Enemy</h2>
+<ul>
+<li>Qubits are very fragile. Heat, noise, and vibration disturb them.</li>
+<li>When that happens, the qubit <b>loses its quantum state</b>. This is called <b>decoherence</b>.</li>
+<li><b>T1</b> = time before a qubit falls from |1&#9002; to |0&#9002;. <b>T2</b> = time before superposition information fades.</li>
+<li>All gates must finish <b>before</b> the qubit decoheres.</li>
+</ul>
+<div class="idea"><b>Analogy:</b> an ice cube in the sun. You must use it before it melts.</div>
+</section>
+
+<section data-background-color="#0b1020">
+<h2>What is a Quantum Gate?</h2>
+<ul>
+<li>A gate is an <b>operation</b> that changes the state of qubits, like a logic gate for bits.</li>
+<li>Gates are <b>reversible</b> (unitary): no information is thrown away, unlike AND / OR.</li>
+<li>Mathematically, a gate is a matrix that multiplies the qubit's state.</li>
+<li>Picture: a gate <b>rotates</b> the qubit's arrow on a sphere (the Bloch sphere).</li>
+</ul>
+<aside class="notes">Roman Urdu: Quantum gate qubit ki state ko ghumata hai. Gates ulte bhi ho sakte hain, isliye information zaya nahi hoti.</aside>
+</section>
+
+<section data-background-color="#0b1020">
+<h2>Single-Qubit Gates</h2>
+<table>
+<tr><th>Gate</th><th>What it does</th><th>Classical cousin</th></tr>
+<tr><td><b>X</b></td><td>Flips |0&#9002; to |1&#9002; and |1&#9002; to |0&#9002;</td><td>NOT gate</td></tr>
+<tr><td><b>H (Hadamard)</b></td><td>Turns |0&#9002; into an equal mix of |0&#9002; and |1&#9002;</td><td>None. Purely quantum!</td></tr>
+<tr><td><b>Z</b></td><td>Flips the sign (phase) of |1&#9002;, keeps |0&#9002;</td><td>None</td></tr>
+</table>
+<div class="idea">H is the gate that <b>creates superposition</b>. Almost every quantum algorithm starts with it.</div>
+</section>
+
+<section data-background-color="#0b1020">
+<h2>Two-Qubit Gate: CNOT</h2>
+<ul>
+<li>CNOT = Controlled-NOT. It has a <b>control</b> qubit and a <b>target</b> qubit.</li>
+<li>Rule: if control = 1, flip the target. If control = 0, do nothing.</li>
+</ul>
+<table>
+<tr><th>Control</th><th>Target in</th><th>Target out</th></tr>
+<tr><td>0</td><td>0</td><td>0</td></tr>
+<tr><td>0</td><td>1</td><td>1</td></tr>
+<tr><td>1</td><td>0</td><td>1</td></tr>
+<tr><td>1</td><td>1</td><td>0</td></tr>
+</table>
+<div class="idea">If the control is in superposition, CNOT <b>creates entanglement</b>. Gates like H, T and CNOT together can build any quantum circuit (universal set).</div>
+</section>
+
+<section data-background-color="#0b1020">
+<h2>Example Circuit: Making Entanglement</h2>
+<p>Start with two qubits in |00&#9002;</p>
+<ul>
+<li class="fragment"><b>Step 1:</b> apply H to qubit 1. It becomes (|0&#9002; + |1&#9002;)/&radic;2, a superposition.</li>
+<li class="fragment"><b>Step 2:</b> apply CNOT (qubit 1 is control, qubit 2 is target).</li>
+<li class="fragment"><b>Result:</b> (|00&#9002; + |11&#9002;)/&radic;2, the Bell state. Measuring gives 00 or 11 with 50% chance each.</li>
+</ul>
+<pre class="mono" style="font-size:.85em;text-align:left;width:60%;margin:14px auto;background:#151b33;padding:12px;border-radius:8px">q1: ──[H]──●──
+            │
+q2: ───────⊕──</pre>
+</section>
+
+<section data-background-color="#0b1020">
+<h2>Quantum Control: Applying Gates</h2>
+<p class="sub">Gates on paper are simple. In hardware, we must physically control each qubit.</p>
+<ul>
+<li class="fragment"><b>Superconducting:</b> send precise <b>microwave pulses</b> (about 4 to 8 GHz). Pulse shape and length decide which gate happens.</li>
+<li class="fragment"><b>Trapped ions:</b> use carefully tuned <b>laser pulses</b>.</li>
+<li class="fragment"><b>Calibration:</b> every qubit is slightly different, so pulses must be tuned regularly.</li>
+</ul>
+<div class="idea"><b>Analogy:</b> like pushing a child on a swing. You must push at exactly the right rhythm and strength.</div>
+</section>
+
+<section data-background-color="#0b1020">
+<h2>Cooling and Readout</h2>
+<div class="row">
+<div class="card"><h3>Cooling</h3>Superconducting qubits sit in a <b>dilution refrigerator</b> at about 15 millikelvin, colder than outer space. This reduces heat noise and lets the circuits superconduct.</div>
+<div class="card"><h3>Readout</h3>To measure a qubit, a weak microwave signal is sent to it. The reflected signal changes depending on |0&#9002; or |1&#9002;. Electronics turn this into a classical 0 or 1.</div>
+</div>
+<div class="idea">The control electronics are <b>classical</b> (normal digital hardware). A quantum computer is always a hybrid of quantum + classical parts.</div>
+</section>
+
+<section data-background-color="#0b1020">
+<h2>Quantum Error Correction</h2>
+<ul>
+<li>Qubits make mistakes often, and we cannot simply copy a qubit to back it up.</li>
+<li>Solution: spread one piece of information across <b>many physical qubits</b>. Together they form one reliable <b>logical qubit</b>.</li>
+<li>Extra helper qubits keep checking for errors without measuring the data itself. A popular method is the <b>surface code</b>.</li>
+<li>Cost: one logical qubit may need hundreds to thousands of physical qubits.</li>
+</ul>
+<div class="idea"><b>Analogy:</b> sending an important message through many friends and taking the majority answer.</div>
+</section>
+
+<section data-background-color="#0b1020">
+<h2>The Architecture Stack</h2>
+<div class="stack">
+<div class="layer fragment"><b>1. Application:</b> the algorithm (Shor, Grover, chemistry simulation)</div>
+<div class="layer fragment"><b>2. Compiler:</b> converts circuits into the gates the chip supports and maps them to physical qubits</div>
+<div class="layer fragment"><b>3. Error correction layer:</b> logical qubits built from physical ones</div>
+<div class="layer fragment"><b>4. Control hardware:</b> pulse generators, readout electronics (classical)</div>
+<div class="layer fragment"><b>5. Qubit chip:</b> physical qubits inside the cooling system</div>
+</div>
+<aside class="notes">Roman Urdu: Upar se neeche: algorithm, compiler, error correction, control electronics, aur sabse neeche asli qubits.</aside>
+</section>
+
+<section data-background-color="#0b1020">
+<h2>Challenges Today</h2>
+<ul>
+<li><b>Noise and decoherence:</b> qubits are unstable.</li>
+<li><b>Scaling:</b> wiring and cooling thousands of qubits is very hard.</li>
+<li><b>Connectivity:</b> on many chips, a qubit can only talk to its neighbors.</li>
+<li><b>NISQ era:</b> today's machines are Noisy Intermediate-Scale Quantum: a few hundred to about a thousand noisy qubits, not yet fully error-corrected.</li>
+</ul>
+</section>
+
+<section data-background-color="#0b1020">
+<h2>Summary</h2>
+<ul>
+<li>A <b>qubit</b> can be in superposition and can be entangled with others.</li>
+<li><b>Gates</b> (X, H, Z, CNOT) are reversible operations that transform qubit states.</li>
+<li><b>Control</b> means pulses, extreme cooling, and readout electronics.</li>
+<li><b>Error correction</b> is the key to building large, reliable machines.</li>
+<li>The architecture is a <b>stack</b>: algorithm, compiler, control, qubits.</li>
+</ul>
+<h3 class="accent">Thank you! Questions?</h3>
+</section>
+
+</div></div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+Reveal.initialize({hash:true,transition:'slide',width:1280,height:760,margin:0.04,plugins:[RevealNotes]});
+</script>
+</body>
+</html>

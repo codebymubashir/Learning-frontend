@@ -1,0 +1,161 @@
+.box{
+    width: 100%;
+    height: 15vh;
+    margin-left: 2rem;
+    margin-top: 2rem;
+    
+}
+.img{
+    width: 100%;
+    height: 100vh;
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfr_wTHpMUdB_BacJ0GbCBBckTLw7MtKn7NaXTqdGkZw&s=10);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.box1{
+    width: 20vw;
+    height: 50vh;
+    background-color: white;
+    padding: 1rem;
+    position: absolute;
+    right: 2rem;
+    top: 6rem;
+}
+.box1 h3{
+    font-size: 2.5rem;
+}
+.box1 p{
+    font-size: 14px;
+}
+.box1 button{
+    width: 4vw;
+    height: 5vh;
+}
+
+.cards{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: space-around;
+    position: absolute;
+    top: 30rem;
+    
+}
+.card1{
+    width: 25vw;
+    height: auto;
+    background-color: white;
+    padding: 15px;
+}
+.card1 h4{
+    font-size: 2rem;
+    font-weight: bold;
+}
+.section2{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+}
+.sect2cont{
+    width: 50%;
+    height: 100vh;
+    padding: 2rem;
+}
+.sect2cont h2{
+    font-size: 3rem;
+}
+.sect2cont h3{
+    font-size: 1rem;
+    
+}
+.sect2img{
+    width: 50%;
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    padding-top: 5rem;
+}
+.sect2img1{
+    width: 40%;
+    height: 70vh;
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPvGSkynpaiUnzAJytpaaMPNfFdSGiiFU5boIjN_8m5FATp6InWCoxTtUl&s=10);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.sect2img2{
+    width: 40%;
+    height: 70vh;
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPvGSkynpaiUnzAJytpaaMPNfFdSGiiFU5boIjN_8m5FATp6InWCoxTtUl&s=10);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+.section3{
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    flex-direction: row;
+}
+.sect3img1{
+    width: 25%;
+    height: 50vh;
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTc1ShYDQ3MrsXZC246Be_Y09O0h4ynzlTHF2zi1Uapq4EkwDI9yarEmyI&s=10);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+}
+.sect3img2{
+    width: 25%;
+    height: 50vh;
+    background-image: url(https://cdn.britannica.com/37/135437-050-A12461CC/Burj-Khalifa-world-Sheikh-Khalifah-ibn-Zayid-2010.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+}
+.sect3img3{
+    width: 25%;
+    height: 50vh;
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8Sfpd94qx5rNXY2P5uOxuPFoq4AfkgMyy6IAb7UIVwxpoBQM9VlQAcwE&s=10);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+}
+.sect3img4{
+    width: 25%;
+    height: 50vh;
+    background-image: url(https://img.magnific.com/free-photo/vertical-shot-white-building-clear-sky_181624-4575.jpg?semt=ais_hybrid&w=740&q=80);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+}
+
+.section4{
+    width: 100%;
+    height: 50vh;
+    border: 4px solid red;
+    padding: 4rem;
+}
+
+.sect4cont{
+    width: 55vw;
+    height: 30vh;
+    border: 2px solid black;
+}
+
+
+
+
+
+
+
